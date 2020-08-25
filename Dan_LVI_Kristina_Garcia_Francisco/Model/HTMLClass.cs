@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 
@@ -53,7 +54,7 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.Model
                 htmlTitle = htmlTitle.Replace(c.ToString(), "_");
             }
 
-            using (StreamWriter sw = new StreamWriter(folderLocation + @"\" + htmlTitle + ".html"))
+            using (StreamWriter sw = new StreamWriter(folderLocation + @"\" + htmlTitle + DateTime.Now.ToString("_dd_MM_yyyy_HHmmss.fff") + ".html"))
             {
                 sw.WriteLine(html);
             }

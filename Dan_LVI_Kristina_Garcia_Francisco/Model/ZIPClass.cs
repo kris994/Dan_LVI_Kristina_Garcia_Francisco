@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.IO.Compression;
 using System.Collections.Generic;
+using System;
 
 namespace Dan_LVI_Kristina_Garcia_Francisco.Model
 {
@@ -29,16 +30,12 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.Model
         /// <param name="folderLocation">folder location</param>
         public void ZIPAFile(string folderLocation, string zipLocation)
         {
-            if (File.Exists(zipLocation + @"\ZIPFolder.zip"))
-            {
-                File.Delete(zipLocation + @"\ZIPFolder.zip");
-            }
-
             // Create Folder if it does not exist
             Directory.CreateDirectory(folderLocation);
             Directory.CreateDirectory(zipLocation);
 
-            ZipFile.CreateFromDirectory(folderLocation, zipLocation + @"\ZIPFolder.zip", CompressionLevel.Fastest, true);
+            ZipFile.CreateFromDirectory(folderLocation, zipLocation + @"\ZIPFolder" 
+                + DateTime.Now.ToString("_dd_MM_yyyy_HHmmss.fff") + ".zip", CompressionLevel.Optimal, true);
         }
     }
 }

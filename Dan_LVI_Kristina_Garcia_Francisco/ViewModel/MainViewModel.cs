@@ -2,6 +2,7 @@
 using Dan_LVI_Kristina_Garcia_Francisco.Model;
 using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -91,7 +92,7 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
             mainWindow.InfoMessage.IsActive = true;
             await Task.Delay(3000);
             mainWindow.InfoMessage.IsActive = false;
-        }   
+        }  
         #endregion
 
         #region Commands
@@ -136,7 +137,6 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
             {
                 InfoText = "Currently the html downloader is unavaiable...";
                 InfoColor = "#FFF34A4A";
-                SnackInfo();
             }
             finally
             {
