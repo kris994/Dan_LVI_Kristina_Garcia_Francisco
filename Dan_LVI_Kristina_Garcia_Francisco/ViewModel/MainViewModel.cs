@@ -8,12 +8,15 @@ using System.Windows.Input;
 
 namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
 {
+    /// <summary>
+    /// Main View Model
+    /// </summary>
     class MainViewModel : ViewModelBase
     {
         readonly MainWindow mainWindow;
         ZIPClass zipClass = new ZIPClass();
-        private readonly string folderLocation = @"~\..\..\..\HTMLFiles";
-        private readonly string zipLocation = @"~\..\..\..\ZIPFolder\ZIPFolder.zip";
+        private readonly string folderLocation = @"..\..\HTMLFiles\";
+        private readonly string zipLocation = @"..\..\ZIPFolder\";
 
         #region Constructor
         /// <summary>
@@ -80,6 +83,9 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         #endregion
 
         #region SnackBarInfo
+        /// <summary>
+        /// Snack bar info showing
+        /// </summary>
         public async void SnackInfo()
         {
             mainWindow.InfoMessage.IsActive = true;
@@ -125,12 +131,16 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
                     InfoText = "Successfuly downloaded the file";
                     InfoColor = "#FF8BC34A";
                 }
-
-                SnackInfo();
             }
             catch (Exception)
             {
-                MessageBoxResult dialog = Xceed.Wpf.Toolkit.MessageBox.Show("Currently the html downloader is unavaiable...", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                InfoText = "Currently the html downloader is unavaiable...";
+                InfoColor = "#FFF34A4A";
+                SnackInfo();
+            }
+            finally
+            {
+                SnackInfo();
             }
         }
 
@@ -173,15 +183,17 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         {
             try
             {
-                zipClass.ZIPAFile(zipLocation, folderLocation);
+                zipClass.ZIPAFile(folderLocation, zipLocation);
                 InfoText = "Successfuly zipped the folder";
                 InfoColor = "#FF8BC34A";
-                SnackInfo();
             }
             catch (Exception)
             {
                 InfoText = "Unable to zip the file";
                 InfoColor = "#FFF34A4A";
+            }
+            finally
+            {
                 SnackInfo();
             }
         }

@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using System.Linq;
 using System.IO.Compression;
 using System.Collections.Generic;
 
@@ -23,18 +22,23 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.Model
             return Directory.EnumerateFileSystemEntries(folderLocation);
         }
 
-        public void ZIPAFile(string zipLocation, string folderLocation)
+        /// <summary>
+        /// Zips the file
+        /// </summary>
+        /// <param name="zipLocation">zip file location</param>
+        /// <param name="folderLocation">folder location</param>
+        public void ZIPAFile(string folderLocation, string zipLocation)
         {
-            if (File.Exists(zipLocation))
+            if (File.Exists(zipLocation + @"\ZIPFolder.zip"))
             {
-                File.Delete(zipLocation);
+                File.Delete(zipLocation + @"\ZIPFolder.zip");
             }
 
             // Create Folder if it does not exist
             Directory.CreateDirectory(folderLocation);
             Directory.CreateDirectory(zipLocation);
 
-            ZipFile.CreateFromDirectory(folderLocation, zipLocation, CompressionLevel.Fastest, true);
+            ZipFile.CreateFromDirectory(folderLocation, zipLocation + @"\ZIPFolder.zip", CompressionLevel.Fastest, true);
         }
     }
 }
