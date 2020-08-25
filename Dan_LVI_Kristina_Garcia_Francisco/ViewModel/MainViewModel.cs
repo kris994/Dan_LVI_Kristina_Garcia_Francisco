@@ -1,8 +1,7 @@
 ﻿using Dan_LVI_Kristina_Garcia_Francisco.Command;
+using Dan_LVI_Kristina_Garcia_Francisco.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -12,6 +11,9 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
     class MainViewModel : ViewModelBase
     {
         readonly MainWindow mainWindow;
+        ZIPClass zipClass = new ZIPClass();
+        private readonly string folderLocation = @"~\..\..\..\HTMLFiles";
+        private readonly string zipLocation = @"~\..\..\..\ZIPFolder\ZIPFolder.zip";
 
         #region Constructor
         /// <summary>
@@ -25,6 +27,9 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         #endregion
 
         #region Property
+        /// <summary>
+        /// Html Path
+        /// </summary>
         private string hTMLPath;
         public string HTMLPath
         {
@@ -38,6 +43,49 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
                 OnPropertyChanged("HTMLPath");
             }
         }
+
+        /// <summary>
+        /// Info Text
+        /// </summary>
+        private string infoText;
+        public string InfoText
+        {
+            get
+            {
+                return infoText;
+            }
+            set
+            {
+                infoText = value;
+                OnPropertyChanged("InfoText");
+            }
+        }
+
+        /// <summary>
+        /// Info Color
+        /// </summary>
+        private string infoColor;
+        public string InfoColor
+        {
+            get
+            {
+                return infoColor;
+            }
+            set
+            {
+                infoColor = value;
+                OnPropertyChanged("InfoColor");
+            }
+        }
+        #endregion
+
+        #region SnackBarInfo
+        public async void SnackInfo()
+        {
+            mainWindow.InfoMessage.IsActive = true;
+            await Task.Delay(3000);
+            mainWindow.InfoMessage.IsActive = false;
+        }   
         #endregion
 
         #region Commands
@@ -64,7 +112,21 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         {
             try
             {
+                HTMLClass htmlClass = new HTMLClass();
+                string html = htmlClass.GetHTMLFromURL(folderLocation, HTMLPath);
 
+                if (html == null)
+                {
+                    InfoText = "The following html path is not accessable";
+                    InfoColor = "#FFF34A4A";
+                }
+                else
+                {
+                    InfoText = "Successfuly downloaded the file";
+                    InfoColor = "#FF8BC34A";
+                }
+
+                SnackInfo();
             }
             catch (Exception)
             {
@@ -109,7 +171,19 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         /// </summary>
         public void ZIPFilesExecute()
         {
-
+            try
+            {
+                zipClass.ZIPAFile(zipLocation, folderLocation);
+                InfoText = "Successfuly zipped the folder";
+                InfoColor = "#FF8BC34A";
+                SnackInfo();
+            }
+            catch (Exception)
+            {
+                InfoText = "Unable to zip the file";
+                InfoColor = "#FFF34A4A";
+                SnackInfo();
+            }
         }
 
         /// <summary>
@@ -117,7 +191,14 @@ namespace Dan_LVI_Kristina_Garcia_Francisco.ViewModel
         /// </summary>
         public bool CanZIPFilesExecute()
         {
-            return true;
+            if (!zipClass.IsDirectoryEmpty(folderLocation).Any())
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         /// <summary>
