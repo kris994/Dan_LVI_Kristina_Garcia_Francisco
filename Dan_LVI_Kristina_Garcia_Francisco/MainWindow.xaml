@@ -5,8 +5,93 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dan_LVI_Kristina_Garcia_Francisco"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        d:DesignHeight="300"
+        d:DesignWidth="600"
+        WindowStyle="None"
+        WindowState="Maximized"
+        AllowsTransparency="True"
+        Background="Transparent">
     <Grid>
-        
+        <Grid Width="600"
+              Height="300"
+              Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="75" />
+                <RowDefinition Height="300*" />
+            </Grid.RowDefinitions>
+            <!--Header-->
+            <Grid Grid.Row="0">
+                <Label  x:Name="lblTitle"
+                        Margin="40,15,300,0"
+                        Foreground="{StaticResource PrimaryHueMidBrush}"
+                        FontWeight="Bold"
+                        FontSize="30"
+                        Height="64">HTML Extractor</Label>
+                <Border Grid.Row="0"
+                        BorderThickness="0"
+                        Margin="30,65,30,0"
+                        Height="10"
+                        Background="#505050"
+                        CornerRadius="5"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"></Border>
+                <Button
+                        x:Name="Exit"
+                        Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                        ToolTip="Exit"
+                        BorderBrush="#FFC34A4A"
+                        Background="#FFC34A4A"
+                        Height="22"
+                        Width="22"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Visibility="Visible" Margin="0,20,30,0"
+                        Command="{Binding Exit, UpdateSourceTrigger=PropertyChanged}">
+                    <materialDesign:PackIcon Kind="WindowClose"
+                        Height="16"
+                        Width="16" />
+                </Button>
+                <!--Dugmici-->
+            </Grid>
+            <Grid Grid.Row="1">
+                <TextBox    Grid.Row="1"
+                                x:Name="txtHtmlPath"
+                                materialDesign:HintAssist.Hint="HTML Path"
+                                Width="500"
+                                HorizontalContentAlignment="Center"
+                                Text="{Binding HTMLPath, UpdateSourceTrigger=PropertyChanged}"
+                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                Height="45"
+                                Margin="0,0,0,100"
+                                MaxLength="40"
+                                SelectionBrush="#FF8BC34A"></TextBox>
+                <Button Grid.Column="0"
+                            x:Name="btnDownloadHTML"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                            materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="Download HTML"
+                            Margin="286,135,164,55"
+                            Width="150"
+                            Height="35"
+                            Foreground="White"
+                            Command="{Binding DownloadHTML, UpdateSourceTrigger=PropertyChanged}"
+                            BorderBrush="{x:Null}">Download HTML
+                </Button>
+                <Button
+                            x:Name="btnZIP"
+                            Style="{StaticResource MaterialDesignRaisedButton}"
+                    materialDesign:ButtonAssist.CornerRadius="20"
+                            ToolTip="ZIP files"
+                            Margin="450,135,50,55"
+                            Width="100"
+                            Height="35"
+                            Command="{Binding ZIPFiles, UpdateSourceTrigger=PropertyChanged}"
+                            Background="#FF8BC34A"
+                            Foreground="White"
+                            BorderBrush="{x:Null}">ZIP Files
+                </Button>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
